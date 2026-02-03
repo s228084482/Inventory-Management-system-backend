@@ -34,4 +34,7 @@ public class Users {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private boolean active;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private String profileURL;
 }
