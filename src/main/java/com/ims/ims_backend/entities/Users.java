@@ -26,15 +26,12 @@ public class Users {
     @Column(nullable = false)
     private String phoneUmber;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
     @Column(nullable = false)
     private String experience;
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private boolean active;
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private String profileURL;
 }
