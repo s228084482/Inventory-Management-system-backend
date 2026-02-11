@@ -1,5 +1,6 @@
 package com.ims.ims_backend.controllers;
 
+import com.ims.ims_backend.entities.Product;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins="*")
@@ -15,5 +16,9 @@ public class ProductController {
     public String saveProductInfoData(){
 
         return "Ok";
+    }
+    @GetMapping("/getByProductName")
+    public Product getByName(@RequestBody String productName){
+        return null;
     }
 }
