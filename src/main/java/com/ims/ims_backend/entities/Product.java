@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,5 +42,8 @@ public class Product {
         this.qty = qty;
         this.description = description;
         this.status = status;
+    }
+
+    public Product() {
     }
 }

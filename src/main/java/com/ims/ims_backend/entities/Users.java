@@ -34,4 +34,6 @@ public class Users {
     private boolean active;
     @Column(nullable = false)
     private String profileURL;
+
+
 }

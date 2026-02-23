@@ -15,7 +15,6 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long supplierID;
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private String supplierName;
     @Column(nullable = false)
     private String supplierPhoneNumber;
