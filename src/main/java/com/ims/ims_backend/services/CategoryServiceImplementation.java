@@ -28,7 +28,7 @@ public class CategoryServiceImplementation implements CategoryService{
         Set<CategoryData> cData = new HashSet<>();
         for(Category c: categorySet){
             Long numberOfProductAssigned = productRepository.sizeOfSpecificId(c.getCategoryId());
-            var percent = (numberOfProductAssigned/productRepository.count()) * 100;
+            var percent = ((double)numberOfProductAssigned/productRepository.count()) * 100;
             CategoryData data = new CategoryData(c.getCategoryId(),c.getCategoryName(),numberOfProductAssigned, percent +"%");
             cData.add(data);
         }

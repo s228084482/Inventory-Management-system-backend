@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
-    @Query(value= "SELECT COUNT(*) FROM Product WHERE categoryId = :categoryId", nativeQuery = true)
-    Long sizeOfSpecificId(@Param("categoryId") Long categoryId);
+    @Query(value= "SELECT COUNT(*) FROM Product WHERE category_id = :category_id", nativeQuery = true)
+    Long sizeOfSpecificId(@Param("category_id") Long category_id);
 }
