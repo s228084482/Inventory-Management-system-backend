@@ -10,6 +10,6 @@ import java.util.Set;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,Long> {
-    @Query(value = "SELECT EXISTS (SELECT 1 FORM Category WHERE categoryName = :categoryName)", nativeQuery = true)
-    boolean existsByName(@Param("categoryName") String categoryName);
+    @Query(value = "SELECT COUNT(*) FROM category WHERE category_name = :category_name", nativeQuery = true)
+    int existsByName(@Param("category_name") String category_name);
 }

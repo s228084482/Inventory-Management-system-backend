@@ -14,5 +14,5 @@ public interface CategoryService {
 
     ResponseEntity<Category> editCategory(long id, Category category);
 
-    Category save(Category category);
+    ResponseEntity<Boolean>  save(Category category);
 }

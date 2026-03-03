@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -59,11 +58,11 @@ public class CategoryServiceImplementation implements CategoryService{
     }
 
     @Override
-    public Category save(Category category) {
-        if(!repository.existsByName(category.getCategoryName())){
-            return repository.save(category);
-        }else{
-            return null;
+    public ResponseEntity<Boolean> save(Category category) {
+        boolean exist = repository.existsByName(category.getCategoryName()) > 0;
+        if(!exist){
+            repository.save(category);
         }
+        return ResponseEntity.ok(exist);
     }
 }

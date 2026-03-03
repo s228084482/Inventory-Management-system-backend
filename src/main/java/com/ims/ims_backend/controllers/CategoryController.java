@@ -30,7 +30,7 @@ public class CategoryController {
         return service.editCategory(id,category);
     }
     @PostMapping
-    public Category saveCategory(@RequestBody Category category){
+    public ResponseEntity<Boolean>  saveCategory(@RequestBody Category category){
         return service.save(category);
     }
 }
