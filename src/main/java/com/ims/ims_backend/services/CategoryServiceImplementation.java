@@ -60,6 +60,10 @@ public class CategoryServiceImplementation implements CategoryService{
 
     @Override
     public Category save(Category category) {
-        return repository.save(category);
+        if(!repository.existsByName(category.getCategoryName())){
+            return repository.save(category);
+        }else{
+            return null;
+        }
     }
 }

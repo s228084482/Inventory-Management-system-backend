@@ -20,12 +20,13 @@ public class CategoryController {
     public Set<CategoryData> getCategoryData(){
         return service.getCategoryData();
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable long id){
         return service.deleteCategory(id);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Category> editCategory(@PathVariable long id, @PathVariable Category category){
+    public ResponseEntity<Category> editCategory(@PathVariable long id, @RequestBody Category category){
         return service.editCategory(id,category);
     }
     @PostMapping
