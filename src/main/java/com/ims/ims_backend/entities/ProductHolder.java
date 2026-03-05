@@ -8,8 +8,9 @@ public class ProductHolder {
     private String supplierName;
     private String move;
     private String category_name;
+    private String user_name;
 
-    public ProductHolder(String productName, float price, Long quantity, String description, String supplierName, String move, String category_name) {
+    public ProductHolder(String productName, float price, Long quantity, String description, String supplierName, String move, String category_name, String user_name) {
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
@@ -17,6 +18,15 @@ public class ProductHolder {
         this.supplierName = supplierName;
         this.move = move;
         this.category_name = category_name;
+        this.user_name = user_name;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public ProductHolder() {

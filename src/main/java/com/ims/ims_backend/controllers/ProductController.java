@@ -1,6 +1,5 @@
 package com.ims.ims_backend.controllers;
 
-import com.ims.ims_backend.Model_Holders;
 import com.ims.ims_backend.entities.Product;
 import com.ims.ims_backend.entities.ProductHolder;
 import com.ims.ims_backend.services.ProductService;
@@ -21,10 +20,6 @@ public class ProductController {
     public ResponseEntity<Boolean> saveProduct(@RequestBody ProductHolder product){
         return service.saveProduct(product);
     }
-//    @PostMapping("/saveProductInfo")
-//    public ResponseEntity<String> saveProductInfoData(@RequestBody ProductInfo productInfo){
-//        return service.saveProductInfo(productInfo);
-//    }
     @GetMapping("/getByProductName")
     public Product getByName(@RequestBody String productName){
         return null;

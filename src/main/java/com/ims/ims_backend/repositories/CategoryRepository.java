@@ -12,4 +12,5 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     int existsByName(@Param("category_name") String category_name);
     @Query(value="SELECT category_id FROM category WHERE category_name = :category_name", nativeQuery = true)
     long getCategoryId(@Param("category_name") String category_name);
+    Boolean existsCategoryByCategoryName(String name);
 }

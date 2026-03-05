@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<Users,Long> {
     long countTotalUsers();
     @Query(value = "SELECT COUNT(*) FROM Users WHERE active = true", nativeQuery = true)
     long countActiveUsers();
+
+    Boolean existsUsersByFullName(String fullName);
 }

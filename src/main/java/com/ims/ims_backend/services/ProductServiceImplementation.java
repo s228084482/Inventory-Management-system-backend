@@ -3,6 +3,7 @@ package com.ims.ims_backend.services;
 import com.ims.ims_backend.entities.ProductHolder;
 import com.ims.ims_backend.exceptions.CategoryNotFoundException;
 import com.ims.ims_backend.exceptions.ProductNotFoundException;
+import com.ims.ims_backend.exceptions.SupplierNotFoundException;
 import com.ims.ims_backend.repositories.CategoryRepository;
 import com.ims.ims_backend.repositories.ProductRepository;
 import com.ims.ims_backend.repositories.SupplierRepository;
@@ -41,9 +42,25 @@ public class ProductServiceImplementation implements ProductService{
         String supplierName = product.getSupplierName();
         String move = product.getMove();
         String category_name = product.getCategory_name();
+        String userName = product.getUser_name();
 
-        Long category_id = categoryRepository.getCategoryId(category_name);
-        Long supplier_id = supplierRepository.getSupplierId(supplierName);
+        long category_id;
+        long supplier_id;
+        long user_id;
+
+        if(!supplierRepository.existsBySupplierName(supplierName)){
+            String message = "There is no supplier with this name: " + supplierName;
+            throw new SupplierNotFoundException(message);
+        }else{
+            supplier_id = supplierRepository.getSupplierId(supplierName);
+        }
+        if(!categoryRepository.existsCategoryByCategoryName(category_name)){
+            String message = "There is no Category with this name: " + category_name;
+            throw new CategoryNotFoundException(message);
+        }else{
+            category_id = categoryRepository.getCategoryId(category_name);
+        }
+
         return null;
     }
 }
