@@ -1,6 +1,6 @@
-package com.ims.ims_backend.entities;
+package com.ims.ims_backend.DataTransferObjects;
 
-public class ProductHolder {
+public class ProductDTO {
     private String productName;
     private float price;
     private Long quantity;
@@ -10,7 +10,7 @@ public class ProductHolder {
     private String category_name;
     private String user_name;
 
-    public ProductHolder(String productName, float price, Long quantity, String description, String supplierName, String move, String category_name, String user_name) {
+    public ProductDTO(String productName, float price, Long quantity, String description, String supplierName, String move, String category_name, String user_name) {
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
@@ -29,7 +29,7 @@ public class ProductHolder {
         this.user_name = user_name;
     }
 
-    public ProductHolder() {
+    public ProductDTO() {
     }
 
     public String getProductName() {

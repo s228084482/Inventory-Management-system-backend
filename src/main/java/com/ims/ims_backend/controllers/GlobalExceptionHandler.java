@@ -1,10 +1,7 @@
 package com.ims.ims_backend.controllers;
 
 import com.ims.ims_backend.entities.ErrorResponse;
-import com.ims.ims_backend.exceptions.CategoryNotFoundException;
-import com.ims.ims_backend.exceptions.ProductNotFoundException;
-import com.ims.ims_backend.exceptions.SupplierNotFoundException;
-import com.ims.ims_backend.exceptions.UserNotFoundException;
+import com.ims.ims_backend.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,5 +30,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException e){
         ErrorResponse userNotFound = new ErrorResponse(LocalDateTime.now(),e.getMessage(),"User not found");
         return new ResponseEntity<>(userNotFound,HttpStatus.NOT_FOUND);
+    }
+    public ResponseEntity<?> handleProductExistException(productExistsException e){
+        ErrorResponse productExist = new ErrorResponse(LocalDateTime.now(),e.getMessage(),"Product already exist.");
+        return new ResponseEntity<>(productExist,HttpStatus.CONFLICT);
     }
 }

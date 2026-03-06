@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface CategoryRepository extends JpaRepository<Category,Long> {
     @Query(value = "SELECT COUNT(*) FROM category WHERE category_name = :category_name", nativeQuery = true)
     int existsByName(@Param("category_name") String category_name);
-    @Query(value="SELECT category_id FROM category WHERE category_name = :category_name", nativeQuery = true)
-    long getCategoryId(@Param("category_name") String category_name);
+    @Query(value="SELECT * FROM category WHERE category_name = :category_name", nativeQuery = true)
+    Category getCategory(@Param("category_name") String category_name);
     Boolean existsCategoryByCategoryName(String name);
 }

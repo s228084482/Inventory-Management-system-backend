@@ -1,26 +1,22 @@
-package com.ims.ims_backend.entities;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package com.ims.ims_backend.DataTransferObjects;
 
 //@NoArgsConstructor
 //@AllArgsConstructor
 //@Data
-public class CategoryData {
+public class CategoryDTO {
     private Long id;
     private String name;
     private Long productAssigned;
     private String percentage;
 
-    public CategoryData(Long id, String name, Long productAssigned, String percentage) {
+    public CategoryDTO(Long id, String name, Long productAssigned, String percentage) {
         this.id = id;
         this.name = name;
         this.productAssigned = productAssigned;
         this.percentage = percentage;
     }
 
-    public CategoryData() {
+    public CategoryDTO() {
     }
 
     public Long getId() {

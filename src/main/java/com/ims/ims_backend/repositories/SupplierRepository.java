@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier,Long> {
-    @Query(value="SELECT supplierid FROM supplier WHERE supplier_name = :supplier_name", nativeQuery = true)
-    Long getSupplierId(@Param("supplier_name") String supplier_name);
+    @Query(value="SELECT * FROM supplier WHERE supplier_name = :supplier_name", nativeQuery = true)
+    Supplier getSupplier(@Param("supplier_name") String supplier_name);
     Boolean existsBySupplierName(String name);
 }

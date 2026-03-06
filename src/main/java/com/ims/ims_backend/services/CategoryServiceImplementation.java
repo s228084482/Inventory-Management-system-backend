@@ -1,7 +1,8 @@
 package com.ims.ims_backend.services;
 
 import com.ims.ims_backend.entities.Category;
-import com.ims.ims_backend.entities.CategoryData;
+import com.ims.ims_backend.DataTransferObjects.CategoryDTO;
+import com.ims.ims_backend.exceptions.CategoryNotFoundException;
 import com.ims.ims_backend.repositories.CategoryRepository;
 import com.ims.ims_backend.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,17 @@ public class CategoryServiceImplementation implements CategoryService{
     @Autowired
     private ProductRepository productRepository;
     @Override
-    public Set<CategoryData> getCategoryData() {
+    public Set<CategoryDTO> getCategoryData() {
         Set<Category> categories = new HashSet<>(repository.findAll());
         return getAssignedProductAndPercentage(categories);
     }
 
-    public Set<CategoryData> getAssignedProductAndPercentage(Set<Category> categorySet){
-        Set<CategoryData> cData = new HashSet<>();
+    public Set<CategoryDTO> getAssignedProductAndPercentage(Set<Category> categorySet){
+        Set<CategoryDTO> cData = new HashSet<>();
         for(Category c: categorySet){
             Long numberOfProductAssigned = productRepository.sizeOfSpecificId(c.getCategoryId());
             var percent = ((double)numberOfProductAssigned/productRepository.count()) * 100;
-            CategoryData data = new CategoryData(c.getCategoryId(),c.getCategoryName(),numberOfProductAssigned, percent +"%");
+            CategoryDTO data = new CategoryDTO(c.getCategoryId(),c.getCategoryName(),numberOfProductAssigned, percent +"%");
             cData.add(data);
         }
         return cData;
@@ -37,7 +38,7 @@ public class CategoryServiceImplementation implements CategoryService{
     @Override
     public ResponseEntity<Void> deleteCategory(long id) {
         if(!repository.existsById(id)){
-            return ResponseEntity.notFound().build();
+            throw new CategoryNotFoundException("Category that you are trying to delete isn't found.");
         }
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
@@ -46,7 +47,7 @@ public class CategoryServiceImplementation implements CategoryService{
     @Override
     public ResponseEntity<Category> editCategory(long id, Category newCategory) {
         if(!repository.existsById(id)){
-            return ResponseEntity.notFound().build();
+            throw new CategoryNotFoundException("Category that you are trying to edit isn't found.");
         }
         return repository.findById(id).map(category ->{
             category.setCategoryName(newCategory.getCategoryName());
