@@ -38,7 +38,7 @@ public class CategoryServiceImplementation implements CategoryService{
     @Override
     public ResponseEntity<Void> deleteCategory(long id) {
         if(!repository.existsById(id)){
-            throw new CategoryNotFoundException("Category that you are trying to delete isn't found.");
+            throw new CategoryNotFoundException("Category that you are trying to delete isn't found, please try again!");
         }
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
@@ -47,10 +47,12 @@ public class CategoryServiceImplementation implements CategoryService{
     @Override
     public ResponseEntity<Category> editCategory(long id, Category newCategory) {
         if(!repository.existsById(id)){
-            throw new CategoryNotFoundException("Category that you are trying to edit isn't found.");
+            throw new CategoryNotFoundException("Category that you are trying to edit isn't found, please try again!");
         }
         return repository.findById(id).map(category ->{
-            category.setCategoryName(newCategory.getCategoryName());
+            if(!newCategory.getCategoryName().equals(category.getCategoryName())){
+                category.setCategoryName(newCategory.getCategoryName());
+            }
 
             Category saved = repository.save(category);
 

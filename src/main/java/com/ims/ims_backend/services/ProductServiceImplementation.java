@@ -90,4 +90,15 @@ public class ProductServiceImplementation implements ProductService{
         productRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Override
+    public ResponseEntity<?> editProduct(Long id,Product newProduct) {
+        if(!productRepository.existsById(id))
+            throw new ProductNotFoundException("Product you are trying to edit isn't found, please try again!");
+
+//        productRepository.findById(id).map(product ->{
+//
+//        });
+        return null;
+    }
 }

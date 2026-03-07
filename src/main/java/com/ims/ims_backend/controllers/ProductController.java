@@ -18,17 +18,17 @@ public class ProductController {
     public Boolean saveProduct(@RequestBody ProductDTO product){
         return service.saveProduct(product);
     }
-    @GetMapping("/getByProductName")
-    public Product getByName(@RequestBody String productName){
-        return null;
-    }
 
     @GetMapping("/getAllProducts")
     public ResponseEntity<?> getAllProducts(){
         return service.getAll();
     }
-    @DeleteMapping("${id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> DeleteProduct(@PathVariable Long id){
         return service.DeleteProduct(id);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editProduct(@PathVariable Long id, @RequestBody Product product){
+        return service.editProduct(id,product);
     }
 }
