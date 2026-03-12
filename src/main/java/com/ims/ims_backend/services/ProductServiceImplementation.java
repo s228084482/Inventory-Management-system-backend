@@ -88,7 +88,7 @@ public class ProductServiceImplementation implements ProductService{
         if(!productRepository.existsById(id))
             throw new ProductNotFoundException("Product you are trying to delete is not found please try again.");
         productRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @Override

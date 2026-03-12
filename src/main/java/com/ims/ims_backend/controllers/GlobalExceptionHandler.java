@@ -26,13 +26,19 @@ public class GlobalExceptionHandler {
         ErrorResponse categoryNotFound = new ErrorResponse(LocalDateTime.now(),e.getMessage(), "Category not found");
         return new ResponseEntity<>(categoryNotFound, HttpStatus.NOT_FOUND);
     }
-
+    @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException e){
         ErrorResponse userNotFound = new ErrorResponse(LocalDateTime.now(),e.getMessage(),"User not found");
         return new ResponseEntity<>(userNotFound,HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(productExistsException.class)
     public ResponseEntity<?> handleProductExistException(productExistsException e){
         ErrorResponse productExist = new ErrorResponse(LocalDateTime.now(),e.getMessage(),"Product already exist.");
         return new ResponseEntity<>(productExist,HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(SupplierExistException.class)
+    public ResponseEntity<?> handleSupplierExistException(SupplierExistException e){
+        ErrorResponse supplierAlreadyExist = new ErrorResponse(LocalDateTime.now(),e.getMessage(),"Supplier exist");
+        return new ResponseEntity<>(supplierAlreadyExist,HttpStatus.CONFLICT);
     }
 }
