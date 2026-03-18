@@ -21,6 +21,9 @@ public class CategoryServiceImplementation implements CategoryService{
     @Override
     public Set<CategoryDTO> getCategoryData() {
         Set<Category> categories = new HashSet<>(repository.findAll());
+        if(categories.isEmpty()){
+            throw new CategoryNotFoundException("There are no categories on the system.");
+        }
         return getAssignedProductAndPercentage(categories);
     }
 

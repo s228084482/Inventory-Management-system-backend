@@ -16,7 +16,7 @@ public class SupplierServiceImplementation implements SupplierService{
 
     @Override
     public ResponseEntity<?> save(EditSupplierDTO supplier) {
-        if(!supplierRepository.existsBySupplierName(supplier.getSupplierName())){
+        if(supplierRepository.existsBySupplierName(supplier.getSupplierName())){
             throw new SupplierExistException("The supplier already on the system.");
         }
         Supplier curSupplier = supplierRepository.save(new Supplier(supplier.getSupplierName(), supplier.getSupplierNumber(),
@@ -64,7 +64,7 @@ public class SupplierServiceImplementation implements SupplierService{
                     supplier.getSupplierPhoneNumber().equals(supplierDTO.getSupplierNumber()) &&
                     supplier.getSupplierEmail().equals(supplierDTO.getSupplierEmail())){
 
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.badRequest().body("No changes detected");
             }
 
             Supplier sup = supplierRepository.save(supplier);

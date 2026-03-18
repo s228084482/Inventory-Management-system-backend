@@ -3,6 +3,7 @@ package com.ims.ims_backend.controllers;
 import com.ims.ims_backend.DataTransferObjects.EditSupplierDTO;
 import com.ims.ims_backend.entities.Supplier;
 import com.ims.ims_backend.services.SupplierService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ public class SupplierController {
     private SupplierService service;
 
     @PostMapping("/saveSupplier")
-    public ResponseEntity<?> saveSupplier(@RequestBody EditSupplierDTO supplier){
+    public ResponseEntity<?> saveSupplier(@Valid @RequestBody EditSupplierDTO supplier){
         return service.save(supplier);
     }
     @GetMapping("/getAll")
@@ -27,7 +28,7 @@ public class SupplierController {
         return service.delete(id);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> editSupplier(@PathVariable Long id, @RequestBody EditSupplierDTO supplierDTO){
+    public ResponseEntity<?> editSupplier(@PathVariable Long id,@Valid @RequestBody EditSupplierDTO supplierDTO){
         return service.edit(id,supplierDTO);
     }
 }
