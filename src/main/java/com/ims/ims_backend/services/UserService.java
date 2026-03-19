@@ -1,15 +1,20 @@
 package com.ims.ims_backend.services;
 
-import com.ims.ims_backend.entities.Users;
-
-import java.util.List;
+import com.ims.ims_backend.DataTransferObjects.EditUserDTO;
+import com.ims.ims_backend.DataTransferObjects.UserDTO;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 
 public interface UserService {
-    public Users saveUsers(Users user);
+    ResponseEntity<?> saveUsers(UserDTO user);
 
-    public List<Users> fillAllUsers();
+    ResponseEntity<?> fillAllUsers();
 
     long getActiveUsers();
 
     long getTotalUsers();
+
+    ResponseEntity<?> removeUser(long id);
+
+    ResponseEntity<?> editUser(long id, @Valid EditUserDTO user);
 }

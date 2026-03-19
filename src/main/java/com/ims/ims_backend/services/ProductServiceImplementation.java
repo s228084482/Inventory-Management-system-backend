@@ -68,7 +68,7 @@ public class ProductServiceImplementation implements ProductService{
             String message = "This user (" + userName + ") is not found, please try again.";
             throw new UserNotFoundException(message);
         }else{
-            user = userRepository.getUser(userName);
+            user = userRepository.findUsersByUsername(userName);
         }
 
         if(supplier != null && category != null && user != null){
@@ -100,5 +100,10 @@ public class ProductServiceImplementation implements ProductService{
 //
 //        });
         return null;
+    }
+
+    @Override
+    public long countProducts() {
+        return productRepository.count();
     }
 }

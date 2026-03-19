@@ -8,13 +8,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<Users,Long> {
-    @Query(value = "SELECT COUNT(*) FROM Users",nativeQuery = true)
-    long countTotalUsers();
-    @Query(value = "SELECT COUNT(*) FROM Users WHERE active = true", nativeQuery = true)
-    long countActiveUsers();
+//    @Query(value = "SELECT COUNT(*) FROM Users",nativeQuery = true)
+//    long countTotalUsers();
+//
+//    @Query(value = "SELECT COUNT(*) FROM Users WHERE active = true", nativeQuery = true)
+//    long countActiveUsers();
+
+    long countUsersByActive(boolean active);
 
     Boolean existsUsersByFullName(String fullName);
+    Boolean existsUsersByUsername(String username);
+    Boolean existsUsersByEmail(String email);
 
-    @Query(value="SELECT * FROM Users WHERE username =:username", nativeQuery = true)
-    Users getUser(@Param("username") String username);
+    Users findUsersByUsername(String username);
 }

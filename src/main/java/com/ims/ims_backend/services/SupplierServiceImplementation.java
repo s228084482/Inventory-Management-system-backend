@@ -72,4 +72,9 @@ public class SupplierServiceImplementation implements SupplierService{
 
         }).orElse(ResponseEntity.notFound().build());
     }
+
+    @Override
+    public long countSuppliers() {
+        return supplierRepository.count();
+    }
 }

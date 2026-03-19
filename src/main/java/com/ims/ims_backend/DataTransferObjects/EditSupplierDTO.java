@@ -7,9 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
+@Getter
 public class EditSupplierDTO {
     @NotBlank
     private String supplierName;
@@ -28,15 +26,4 @@ public class EditSupplierDTO {
     public EditSupplierDTO() {
     }
 
-    public String getSupplierName() {
-        return supplierName;
-    }
-
-    public String getSupplierEmail() {
-        return supplierEmail;
-    }
-
-    public String getSupplierNumber() {
-        return supplierNumber;
-    }
 }

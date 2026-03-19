@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 public class Users {
     @Id
@@ -32,8 +32,19 @@ public class Users {
     private String experience;
     @Column(nullable = false)
     private boolean active;
-    @Column(nullable = false)
+
     private String profileURL;
 
+    public Users(String username, String password, String fullName, String email, String phoneUmber, UserRole role, String experience, boolean active, String profileURL) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneUmber = phoneUmber;
+        this.role = role;
+        this.experience = experience;
+        this.active = active;
+        this.profileURL = profileURL;
+    }
 
 }

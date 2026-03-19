@@ -11,4 +11,6 @@ public interface SupplierService {
     ResponseEntity<?> delete(Long id);
 
     ResponseEntity<?> edit(Long id, EditSupplierDTO supplierDTO);
+
+    long countSuppliers();
 }

@@ -31,4 +31,8 @@ public class ProductController {
     public ResponseEntity<?> editProduct(@PathVariable Long id, @RequestBody Product product){
         return service.editProduct(id,product);
     }
+    @GetMapping("/totalProducts")
+    public long countTotalProducts(){
+        return service.countProducts();
+    }
 }
