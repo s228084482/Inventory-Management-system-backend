@@ -75,6 +75,10 @@ public class SupplierServiceImplementation implements SupplierService{
 
     @Override
     public long countSuppliers() {
-        return supplierRepository.count();
+        long size = supplierRepository.count();
+        if(size >= 1){
+            return size;
+        }else
+            return 0;
     }
 }

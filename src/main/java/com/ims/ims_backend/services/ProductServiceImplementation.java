@@ -104,6 +104,9 @@ public class ProductServiceImplementation implements ProductService{
 
     @Override
     public long countProducts() {
-        return productRepository.count();
+        long size = productRepository.count();
+        if(size >= 1)
+            return size;
+        else return 0;
     }
 }

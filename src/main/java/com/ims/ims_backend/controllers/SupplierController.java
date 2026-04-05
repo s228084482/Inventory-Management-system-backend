@@ -31,7 +31,7 @@ public class SupplierController {
     public ResponseEntity<?> editSupplier(@PathVariable Long id,@Valid @RequestBody EditSupplierDTO supplierDTO){
         return service.edit(id,supplierDTO);
     }
-    @GetMapping("totalSuppliers")
+    @GetMapping("/totalSuppliers")
     public long countTotalSuppliers(){
         return service.countSuppliers();
     }

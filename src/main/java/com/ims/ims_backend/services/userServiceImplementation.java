@@ -9,12 +9,22 @@ import com.ims.ims_backend.exceptions.UserNotFoundException;
 import com.ims.ims_backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
-public class userServiceImplementation implements UserService{
+public class userServiceImplementation implements UserService, UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseEntity<?> saveUsers(UserDTO user) {
@@ -26,7 +36,7 @@ public class userServiceImplementation implements UserService{
         }
         Users curUser = null;
         if(user.getRole().equals("Admin")){
-            curUser = new Users(user.getUsername(),user.getPassword(),user.getFullName(),user.getUserEmail(),user.getPhoneNumber(),UserRole.Admin,user.getExperience(),false,"");
+            curUser = new Users(user.getUsername(),passwordEncoder.encode(user.getPassword()),user.getFullName(),user.getUserEmail(),user.getPhoneNumber(),UserRole.Admin,user.getExperience(),false,"");
         }else{
             new Users(user.getUsername(),user.getPassword(),user.getFullName(),user.getUserEmail(),user.getPhoneNumber(),UserRole.Staff,user.getExperience(),false,"");
         }
@@ -41,17 +51,22 @@ public class userServiceImplementation implements UserService{
         if(user.isEmpty()){
             throw new UserNotFoundException("There are no users on the system.");
         }
+
         return ResponseEntity.ok(user);
     }
 
     @Override
     public long getActiveUsers() {
-        return userRepository.countUsersByActive(true);
+        long size = userRepository.countUsersByActive(true);
+        if(size >= 1) return size;
+        else return 0;
     }
 
     @Override
     public long getTotalUsers() {
-        return userRepository.count();
+        long size = userRepository.count();
+        if(size >= 1) return size;
+        else return 0;
     }
 
     @Override
@@ -89,5 +104,17 @@ public class userServiceImplementation implements UserService{
 
             return ResponseEntity.ok(savedUser);
         }).orElse(ResponseEntity.badRequest().build());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Users> user = Optional.ofNullable(userRepository.findUsersByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found")));
+
+
+        return new org.springframework.security.core.userdetails.User(
+                user.get().getUsername(), user.get().getPassword(),
+                List.of(new SimpleGrantedAuthority(user.get().getRole().toString()))
+        );
     }
 }

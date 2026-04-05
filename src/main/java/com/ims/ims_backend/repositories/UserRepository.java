@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<Users,Long> {
 //    @Query(value = "SELECT COUNT(*) FROM Users",nativeQuery = true)
@@ -20,5 +22,5 @@ public interface UserRepository extends JpaRepository<Users,Long> {
     Boolean existsUsersByUsername(String username);
     Boolean existsUsersByEmail(String email);
 
-    Users findUsersByUsername(String username);
+    Optional<Users> findUsersByUsername(String username);
 }
