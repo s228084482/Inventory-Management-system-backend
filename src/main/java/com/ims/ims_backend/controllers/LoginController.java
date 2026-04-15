@@ -2,6 +2,7 @@ package com.ims.ims_backend.controllers;
 
 import com.ims.ims_backend.DataTransferObjects.LoginRequest;
 import com.ims.ims_backend.Security.JwtUtil;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/auth")
 public class LoginController {
-//    @Autowired
+    @Autowired
     private AuthenticationManager authenticationManager;
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request){
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request){
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -25,8 +26,5 @@ public class LoginController {
         String token = JwtUtil.generateToken(request.getUsername());
         return ResponseEntity.ok().body(token);
     }
-    @GetMapping("/me")
-    public String currentUser(Authentication authentication){
-        return authentication.getName();
-    }
+
 }

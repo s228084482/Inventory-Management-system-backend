@@ -2,9 +2,10 @@ package com.ims.ims_backend.Security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
-
+@Component
 public class JwtUtil {
     private static final String SECRET = "mysecretekey";
 

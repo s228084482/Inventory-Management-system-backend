@@ -7,6 +7,7 @@ import com.ims.ims_backend.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
@@ -16,7 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     @PostMapping("/saveUser")
-    public ResponseEntity<?> saveUser(@Valid @RequestBody UserDTO user){
+    public ResponseEntity<?> saveUser(@RequestBody UserDTO user){
         return userService.saveUsers(user);
     }
     @GetMapping("/getAllUsers")
@@ -39,4 +40,8 @@ public class UserController {
     public ResponseEntity<?> editUser(@PathVariable long id,@Valid @RequestBody EditUserDTO user){
         return userService.editUser(id,user);
     }
+//    @GetMapping("/me")
+//    public String currentUser(Authentication authentication){
+//        return authentication.getName();
+//    }
 }

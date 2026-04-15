@@ -47,6 +47,9 @@ public class Users {
         this.profileURL = profileURL;
     }
 
+    public Users() {
+    }
+
     public Long getUserId() {
         return userId;
     }

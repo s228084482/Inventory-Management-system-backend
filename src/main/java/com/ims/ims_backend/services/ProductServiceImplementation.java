@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProductServiceImplementation implements ProductService{
     @Autowired
@@ -50,7 +52,7 @@ public class ProductServiceImplementation implements ProductService{
 
         Category category;
         Supplier supplier;
-        Users user;
+        Optional<Users> user;
 
         if(!supplierRepository.existsBySupplierName(supplierName)){
             String message = "There is no supplier with this name: " + supplierName;
@@ -71,8 +73,8 @@ public class ProductServiceImplementation implements ProductService{
             user = userRepository.findUsersByUsername(userName);
         }
 
-        if(supplier != null && category != null && user != null){
-            Product toBeSavedProduct = new Product(user,supplier,category,productName,price,quantity,description, ProductStatus.available);
+        if(supplier != null && category != null && user.isPresent()){
+            Product toBeSavedProduct = new Product(user.get(),supplier,category,productName,price,quantity,description, ProductStatus.available);
 
             if(!productRepository.existsProductByProductName(toBeSavedProduct.getProductName())){
                 productRepository.save(toBeSavedProduct);

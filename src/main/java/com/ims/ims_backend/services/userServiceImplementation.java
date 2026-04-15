@@ -80,10 +80,16 @@ public class userServiceImplementation implements UserService, UserDetailsServic
 
     @Override
     public ResponseEntity<?> editUser(long id, EditUserDTO user) {
-        if(userRepository.existsById(id)){
+        if(!userRepository.existsById(id)){
             throw new UserNotFoundException("User you are trying to edit isn't found on the system, please try again.");
         }
         return userRepository.findById(id).map(curUser -> {
+            if(user.getFullName().equals(curUser.getFullName()) && user.getEmail().equals(curUser.getEmail())
+                    && user.getPhoneNumber().equals(curUser.getPhoneUmber()) && user.getExperience().equals(curUser.getExperience())){
+//                return ResponseEntity.badRequest().body("No changes made");
+                throw new UserNotFoundException("No changes made.");
+            }
+
             if(!user.getFullName().equals(curUser.getFullName())){
                 curUser.setFullName(user.getFullName());
             }
@@ -96,10 +102,7 @@ public class userServiceImplementation implements UserService, UserDetailsServic
             if(!user.getExperience().equals(curUser.getExperience())){
                 curUser.setExperience(user.getExperience());
             }
-            if(user.getFullName().equals(curUser.getFullName()) && user.getEmail().equals(curUser.getEmail())
-            && user.getPhoneNumber().equals(curUser.getPhoneUmber()) && user.getExperience().equals(curUser.getExperience())){
-                return ResponseEntity.badRequest().body("No changes made");
-            }
+
             Users savedUser = userRepository.save(curUser);
 
             return ResponseEntity.ok(savedUser);
@@ -109,7 +112,7 @@ public class userServiceImplementation implements UserService, UserDetailsServic
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Users> user = Optional.ofNullable(userRepository.findUsersByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User not found")));
+                .orElseThrow(() -> new UserNotFoundException("Invalid credentials.")));
 
 
         return new org.springframework.security.core.userdetails.User(
