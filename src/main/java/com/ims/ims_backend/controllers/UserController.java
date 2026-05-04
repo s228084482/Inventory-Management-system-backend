@@ -40,8 +40,8 @@ public class UserController {
     public ResponseEntity<?> editUser(@PathVariable long id,@Valid @RequestBody EditUserDTO user){
         return userService.editUser(id,user);
     }
-//    @GetMapping("/me")
-//    public String currentUser(Authentication authentication){
-//        return authentication.getName();
-//    }
+    @GetMapping("/me")
+    public String currentUser(Authentication authentication){
+        return authentication.getName();
+    }
 }

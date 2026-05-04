@@ -38,8 +38,10 @@ public class userServiceImplementation implements UserService, UserDetailsServic
         if(user.getRole().equals("Admin")){
             curUser = new Users(user.getUsername(),passwordEncoder.encode(user.getPassword()),user.getFullName(),user.getUserEmail(),user.getPhoneNumber(),UserRole.Admin,user.getExperience(),false,"");
         }else{
-            new Users(user.getUsername(),user.getPassword(),user.getFullName(),user.getUserEmail(),user.getPhoneNumber(),UserRole.Staff,user.getExperience(),false,"");
+            curUser = new Users(user.getUsername(),passwordEncoder.encode(user.getPassword()),user.getFullName(),user.getUserEmail(),user.getPhoneNumber(),UserRole.Staff,user.getExperience(),false,"");
         }
+        if(curUser != null)
+            System.out.println("The object is null: " + curUser);
 
         assert curUser != null;
         return ResponseEntity.ok(userRepository.save(curUser));

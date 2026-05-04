@@ -41,8 +41,13 @@ public class GlobalExceptionHandler {
         ErrorResponse supplierAlreadyExist = new ErrorResponse(LocalDateTime.now(),e.getMessage(),"Supplier exist");
         return new ResponseEntity<>(supplierAlreadyExist,HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(UserExistsException.class)
     public ResponseEntity<?> handleUserExistsException(UserExistsException e){
         ErrorResponse userExits = new ErrorResponse(LocalDateTime.now(),e.getMessage(),"User already exist on the system");
         return new ResponseEntity<>(userExits,HttpStatus.CONFLICT);
+    }
+    public ResponseEntity<?> handleNoChangesMadeException(NoChangesException e){
+        ErrorResponse noChanges = new ErrorResponse(LocalDateTime.now(), e.getMessage(),"No changes");
+        return new ResponseEntity<>(noChanges,HttpStatus.CONFLICT);
     }
 }

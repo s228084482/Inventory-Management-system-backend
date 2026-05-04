@@ -1,11 +1,9 @@
 package com.ims.ims_backend.services;
 
+import com.ims.ims_backend.DataTransferObjects.EditProductDTO;
 import com.ims.ims_backend.DataTransferObjects.ProductDTO;
 import com.ims.ims_backend.entities.*;
-import com.ims.ims_backend.exceptions.CategoryNotFoundException;
-import com.ims.ims_backend.exceptions.ProductNotFoundException;
-import com.ims.ims_backend.exceptions.SupplierNotFoundException;
-import com.ims.ims_backend.exceptions.UserNotFoundException;
+import com.ims.ims_backend.exceptions.*;
 import com.ims.ims_backend.repositories.CategoryRepository;
 import com.ims.ims_backend.repositories.ProductRepository;
 import com.ims.ims_backend.repositories.SupplierRepository;
@@ -56,31 +54,37 @@ public class ProductServiceImplementation implements ProductService{
 
         if(!supplierRepository.existsBySupplierName(supplierName)){
             String message = "There is no supplier with this name: " + supplierName;
+            System.out.println(message);
             throw new SupplierNotFoundException(message);
         }else{
             supplier = supplierRepository.getSupplier(supplierName);
         }
         if(!categoryRepository.existsCategoryByCategoryName(category_name)){
             String message = "There is no Category with this name: " + category_name;
+            System.out.println(message);
             throw new CategoryNotFoundException(message);
         }else{
             category = categoryRepository.getCategory(category_name);
         }
         if(!userRepository.existsUsersByFullName(userName)){
             String message = "This user (" + userName + ") is not found, please try again.";
+            System.out.println(message);
             throw new UserNotFoundException(message);
         }else{
-            user = userRepository.findUsersByUsername(userName);
+            user = userRepository.findUsersByFullName(userName);
         }
 
         if(supplier != null && category != null && user.isPresent()){
+            System.out.println("They are not null,");
             Product toBeSavedProduct = new Product(user.get(),supplier,category,productName,price,quantity,description, ProductStatus.available);
 
             if(!productRepository.existsProductByProductName(toBeSavedProduct.getProductName())){
+                System.out.println("Product has been successfully save.");
                 productRepository.save(toBeSavedProduct);
                 response = true;
             }
         }
+        System.out.println(response);
 
         return response;
     }
@@ -94,14 +98,32 @@ public class ProductServiceImplementation implements ProductService{
     }
 
     @Override
-    public ResponseEntity<?> editProduct(Long id,Product newProduct) {
+    public Optional<ResponseEntity<Product>> editProduct(Long id, EditProductDTO newProduct) {
         if(!productRepository.existsById(id))
             throw new ProductNotFoundException("Product you are trying to edit isn't found, please try again!");
 
-//        productRepository.findById(id).map(product ->{
-//
-//        });
-        return null;
+        return productRepository.findById(id).map(product ->{
+            if(product.getProductName().equals(newProduct.getProductName()) &&
+                    (product.getPrice() == newProduct.getPrice()) && product.getQty() == newProduct.getQuantity()
+            && product.getDescription().equals(newProduct.getDescription())){
+                throw new NoChangesException("No changes made.");
+            }
+
+            if(!product.getProductName().equals(newProduct.getProductName())){
+                product.setProductName(newProduct.getProductName());
+            }
+            if(!(product.getPrice() == newProduct.getPrice())){
+                product.setPrice(newProduct.getPrice());
+            }
+            if(!product.getQty().equals(newProduct.getQuantity())){
+                product.setQty(newProduct.getQuantity());
+            }
+            if(!product.getDescription().equals(newProduct.getDescription())){
+                product.setDescription(newProduct.getDescription());
+            }
+
+            return ResponseEntity.ok(productRepository.save(product));
+        });
     }
 
     @Override
