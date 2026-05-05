@@ -48,6 +48,14 @@ public class SupplierServiceImplementation implements SupplierService{
             throw new SupplierNotFoundException("Supplier that you are trying to edit isn't found.");
         }
         return supplierRepository.findById(id).map(supplier ->{
+            //checking if there is change made and if not I return feedback.
+            if(supplier.getSupplierName().equals(supplierDTO.getSupplierName()) &&
+                    supplier.getSupplierPhoneNumber().equals(supplierDTO.getSupplierNumber()) &&
+                    supplier.getSupplierEmail().equals(supplierDTO.getSupplierEmail())){
+
+                return ResponseEntity.badRequest().body("No changes detected");
+            }
+
             //before updating element I make sure that is not the same.
             if(!supplier.getSupplierName().equals(supplierDTO.getSupplierName())){
                 supplier.setSupplierName(supplierDTO.getSupplierName());
@@ -57,14 +65,6 @@ public class SupplierServiceImplementation implements SupplierService{
             }
             if(!supplier.getSupplierEmail().equals(supplierDTO.getSupplierEmail())){
                 supplier.setSupplierEmail(supplierDTO.getSupplierEmail());
-            }
-
-            //checking if there is change made and if not I return feedback.
-            if(supplier.getSupplierName().equals(supplierDTO.getSupplierName()) &&
-                    supplier.getSupplierPhoneNumber().equals(supplierDTO.getSupplierNumber()) &&
-                    supplier.getSupplierEmail().equals(supplierDTO.getSupplierEmail())){
-
-                return ResponseEntity.badRequest().body("No changes detected");
             }
 
             Supplier sup = supplierRepository.save(supplier);
