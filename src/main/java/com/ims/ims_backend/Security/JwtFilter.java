@@ -1,6 +1,6 @@
 package com.ims.ims_backend.Security;
 
-import com.ims.ims_backend.services.userServiceImplementation;
+import com.ims.ims_backend.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 @Component
 public class JwtFilter extends OncePerRequestFilter {
     //This filter runs before every request
@@ -27,7 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
 //    @Autowired
 //    private JwtUtil jwtUtil;
     @Autowired
-    private userServiceImplementation serviceImplementation;
+    private UserService serviceImplementation;
     String token;
     String username;
 

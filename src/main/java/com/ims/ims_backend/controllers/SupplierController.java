@@ -1,8 +1,7 @@
 package com.ims.ims_backend.controllers;
 
 import com.ims.ims_backend.DataTransferObjects.EditSupplierDTO;
-import com.ims.ims_backend.entities.Supplier;
-import com.ims.ims_backend.services.SupplierService;
+import com.ims.ims_backend.services.SupplierListener;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class SupplierController {
     @Autowired
-    private SupplierService service;
+    private SupplierListener service;
 
     @PostMapping("/saveSupplier")
     public ResponseEntity<?> saveSupplier(@Valid @RequestBody EditSupplierDTO supplier){

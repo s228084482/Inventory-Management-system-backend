@@ -2,7 +2,7 @@ package com.ims.ims_backend.controllers;
 
 import com.ims.ims_backend.entities.Category;
 import com.ims.ims_backend.DataTransferObjects.CategoryDTO;
-import com.ims.ims_backend.services.CategoryService;
+import com.ims.ims_backend.services.CategoryListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.Set;
 @RequestMapping("/api/category")
 public class CategoryController {
     @Autowired
-    private CategoryService service;
+    private CategoryListener service;
     @GetMapping("/getAllCategoryData")
     public Set<CategoryDTO> getCategoryData(){
         return service.getCategoryData();

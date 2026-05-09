@@ -17,7 +17,7 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request){
+    public ResponseEntity<?> login(@RequestBody LoginRequest request){
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),

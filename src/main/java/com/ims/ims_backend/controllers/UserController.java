@@ -2,8 +2,7 @@ package com.ims.ims_backend.controllers;
 
 import com.ims.ims_backend.DataTransferObjects.EditUserDTO;
 import com.ims.ims_backend.DataTransferObjects.UserDTO;
-import com.ims.ims_backend.entities.Users;
-import com.ims.ims_backend.services.UserService;
+import com.ims.ims_backend.services.UserListener;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserListener userService;
     @PostMapping("/saveUser")
     public ResponseEntity<?> saveUser(@RequestBody UserDTO user){
         return userService.saveUsers(user);
@@ -43,5 +42,9 @@ public class UserController {
     @GetMapping("/me")
     public String currentUser(Authentication authentication){
         return authentication.getName();
+    }
+    @GetMapping("/myProfile/{username}")
+    public ResponseEntity<?> getCurrentUser(@PathVariable String username){
+        return userService.getCurrentUser(username);
     }
 }

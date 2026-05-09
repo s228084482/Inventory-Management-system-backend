@@ -3,8 +3,7 @@ package com.ims.ims_backend.controllers;
 import com.ims.ims_backend.DataTransferObjects.EditProductDTO;
 import com.ims.ims_backend.entities.Product;
 import com.ims.ims_backend.DataTransferObjects.ProductDTO;
-import com.ims.ims_backend.services.ProductService;
-import jakarta.validation.Valid;
+import com.ims.ims_backend.services.ProductListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,7 @@ import java.util.Optional;
 @RequestMapping("/api/products")
 public class ProductController {
     @Autowired
-    private ProductService service;
+    private ProductListener service;
 
     @PostMapping("/save")
     public Boolean saveProduct(@RequestBody ProductDTO product){
