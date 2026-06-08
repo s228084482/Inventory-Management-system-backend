@@ -31,7 +31,7 @@ public class ProductService implements ProductListener {
         if(products.isEmpty()){
             throw new ProductNotFoundException("No products found, Database is empty.");
         }else{
-            return ResponseEntity.ok(products);
+            return ResponseEntity.ok(products.stream().filter(prod -> prod.getQty() > 0));
         }
     }
 

@@ -2,6 +2,7 @@ package com.ims.ims_backend.controllers;
 
 import com.ims.ims_backend.entities.ErrorResponse;
 import com.ims.ims_backend.exceptions.*;
+import jdk.jfr.Experimental;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,8 +47,14 @@ public class GlobalExceptionHandler {
         ErrorResponse userExits = new ErrorResponse(LocalDateTime.now(),e.getMessage(),"User already exist on the system");
         return new ResponseEntity<>(userExits,HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(NoChangesException.class)
     public ResponseEntity<?> handleNoChangesMadeException(NoChangesException e){
         ErrorResponse noChanges = new ErrorResponse(LocalDateTime.now(), e.getMessage(),"No changes");
         return new ResponseEntity<>(noChanges,HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(QuantityNotGoodException.class)
+    public ResponseEntity<?> handleQuantityNotGoodException(QuantityNotGoodException e){
+        ErrorResponse response = new ErrorResponse(LocalDateTime.now(), e.getMessage(),"Quantity issue");
+        return new ResponseEntity<>(response,HttpStatus.CONFLICT);
     }
 }
